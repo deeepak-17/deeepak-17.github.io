@@ -1,1 +1,60 @@
-/* terminal drawer + boot styles (Task 6/7) */
+/* Terminal drawer and boot screen. Tokens come from site.css's imports. */
+
+.term-toggle { position: fixed; right: var(--space-lg); bottom: var(--space-lg); z-index: var(--z-raised); min-width: 52px; min-height: 52px; padding: 0 var(--space-md); background: var(--color-paper-3); color: var(--color-term-green); border: var(--rule-hair) solid var(--color-rule-strong); border-radius: var(--radius-card); font-family: var(--font-display); font-size: var(--text-md); font-weight: 700; cursor: pointer; box-shadow: 0 1px 2px oklch(10% 0.01 284 / 0.4); transition: border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
+.term-toggle:hover { border-color: var(--color-accent); }
+.term-toggle:active { transform: translateY(1px); }
+.term-toggle[aria-expanded="true"] { visibility: hidden; }
+
+body.term-locked { overflow: hidden; }
+
+.term-backdrop { position: fixed; inset: 0; z-index: var(--z-modal); background: var(--color-backdrop); opacity: 0; transition: opacity var(--dur-short) var(--ease-out); }
+.term-backdrop.is-open { opacity: 1; }
+
+.term-drawer { position: fixed; inset: 0 0 auto 0; z-index: calc(var(--z-modal) + 1); height: 60vh; min-height: 320px; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; background: var(--color-paper-3); border-bottom: var(--rule-hair) solid var(--color-rule-strong); font-family: var(--font-display); font-size: var(--text-sm); transform: translateY(-100%); transition: transform var(--dur-long) var(--ease-out); }
+.term-drawer.is-open { transform: none; }
+
+.term-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); padding: var(--space-xs) var(--gutter); border-bottom: var(--rule-hair) solid var(--color-rule); background: var(--color-paper-2); }
+.term-head__path { color: var(--color-ink-2); }
+.term-close { min-height: 36px; min-width: 44px; padding: 0 var(--space-sm); background: transparent; color: var(--color-ink-2); border: var(--rule-hair) solid var(--color-rule-strong); border-radius: var(--radius-control); font: inherit; cursor: pointer; }
+.term-close:hover { color: var(--color-ink); border-color: var(--color-muted); }
+
+.term-body { overflow-y: auto; padding: var(--space-md) var(--gutter) var(--space-lg); line-height: 1.55; scrollbar-color: var(--color-rule-strong) transparent; }
+.term-output { white-space: pre-wrap; overflow-wrap: anywhere; color: var(--color-ink); }
+.term-row { min-height: 1.55em; }
+.term-output a { color: var(--color-term-sapphire); }
+.term-line { display: flex; align-items: baseline; gap: var(--space-xs); }
+.term-input { flex: 1; min-width: 0; padding: 0; background: transparent; color: var(--color-ink); border: 0; font: inherit; caret-color: var(--color-title); }
+.term-input:focus-visible { outline: none; }
+.term-line:focus-within { box-shadow: inset 2px 0 0 var(--color-focus); padding-left: var(--space-xs); }
+
+.term-chips { display: none; gap: var(--space-xs); padding: var(--space-sm) var(--gutter); border-top: var(--rule-hair) solid var(--color-rule); overflow-x: auto; }
+.term-chips button { min-height: 44px; padding: 0 var(--space-md); background: var(--color-paper-2); color: var(--color-term-green); border: var(--rule-hair) solid var(--color-rule-strong); border-radius: var(--radius-control); font: inherit; cursor: pointer; white-space: nowrap; }
+.term-chips button:hover { border-color: var(--color-accent); }
+
+/* terminal syntax classes used by command output */
+.c-green { color: var(--color-term-green); }
+.c-red { color: var(--color-term-red); }
+.c-yellow { color: var(--color-term-yellow); }
+.c-blue { color: var(--color-term-blue); }
+.c-mauve { color: var(--color-term-mauve); }
+.c-peach { color: var(--color-term-peach); }
+.c-teal { color: var(--color-term-teal); }
+.c-pink { color: var(--color-term-pink); }
+.c-dim { color: var(--color-muted); }
+.c-text { color: var(--color-ink); }
+
+@media (max-width: 40rem) {
+  .term-drawer { inset: 0; height: 100dvh; }
+  .term-chips { display: flex; }
+}
+@media (hover: none) and (pointer: coarse) { .term-chips { display: flex; } }
+
+/* boot screen (Task 7) */
+.boot { position: fixed; inset: 0; z-index: var(--z-toast); display: grid; place-items: center; padding: var(--gutter); background: var(--color-paper); font-family: var(--font-display); font-size: var(--text-sm); color: var(--color-ink); transform-origin: calc(100% - var(--space-lg) - 26px) calc(100% - var(--space-lg) - 26px); transition: transform var(--dur-long) var(--ease-in), opacity var(--dur-long) var(--ease-in); }
+.boot__log { width: min(640px, 100%); white-space: pre-wrap; overflow-wrap: anywhere; }
+.boot.is-leaving { transform: scale(0.06); opacity: 0; }
+.boot__skip { margin-top: var(--space-lg); color: var(--color-muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .term-drawer, .term-backdrop { transition: none; }
+}

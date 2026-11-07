@@ -43,8 +43,11 @@ function heroExit(gsap) {
   const hero = document.getElementById("hero");
   if (!hero) return;
   const range = { trigger: hero, start: "top top", end: "bottom top", scrub: SCRUB };
-  gsap.to(".hero__copy", { y: -90, opacity: 0.15, ease: "none", scrollTrigger: range });
-  gsap.to(".facts", { y: -180, opacity: 0, ease: "none", scrollTrigger: range });
+  // Explicit start values: this may be created while the boot screen still hides the hero (opacity 0),
+  // and a plain .to() would record that hidden state as the hero's resting look.
+  const rest = { y: 0, opacity: 1 };
+  gsap.fromTo(".hero__copy", rest, { y: -90, opacity: 0.15, ease: "none", scrollTrigger: range });
+  gsap.fromTo(".facts", rest, { y: -180, opacity: 0, ease: "none", scrollTrigger: range });
 }
 
 function headings(gsap, { typing }) {

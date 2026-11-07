@@ -1,0 +1,41 @@
+:root {
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.875rem; --text-md: 1rem; --text-lg: 1.25rem; --text-xl: 1.5625rem; --text-2xl: 1.953rem; --text-3xl: 2.441rem;
+  --text-display-s: clamp(2.25rem, 4vw + 0.5rem, 3.75rem); --text-display: clamp(2.75rem, 5vw + 1rem, 5.25rem);
+  --text-section: clamp(2rem, 2.5vw + 1rem, 3.5rem); --text-title: clamp(1.25rem, 0.75vw + 0.875rem, 1.625rem); --text-lead: clamp(1.125rem, 0.35vw + 1rem, 1.375rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms;
+  --color-error: oklch(52% 0.19 27); --color-success: oklch(50% 0.12 150);
+  --container: 1200px; --gutter: 64px; --gap-columns: 32px; --section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300; --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
+  /* Catppuccin Mocha, converted to OKLCH (same colours as the legacy hex tokens) */
+  --color-paper: oklch(18.3% 0.020 284);     /* crust */
+  --color-paper-2: oklch(21.6% 0.025 284);   /* mantle */
+  --color-paper-3: oklch(24.3% 0.030 284);   /* base */
+  --color-surface: oklch(32.4% 0.032 282);   /* surface0 */
+  --color-ink: oklch(87.9% 0.043 272);       /* text */
+  --color-ink-2: oklch(81.7% 0.040 273);     /* subtext1 */
+  --color-muted: oklch(61.8% 0.037 276);     /* overlay1 */
+  --color-rule: oklch(32.4% 0.032 282);      /* surface0 */
+  --color-rule-strong: oklch(47.7% 0.034 279); /* surface2 */
+  --color-title: oklch(92.3% 0.024 30);      /* rosewater */
+  --color-accent: oklch(78.7% 0.119 305);    /* mauve */
+  --color-accent-ink: oklch(18.3% 0.020 284);
+  --color-focus: oklch(80% 0.18 305);
+  /* terminal syntax roles (terminal output only) */
+  --color-term-green: oklch(85.8% 0.109 143);
+  --color-term-red: oklch(75.6% 0.130 3);
+  --color-term-yellow: oklch(91.9% 0.070 87);
+  --color-term-blue: oklch(76.6% 0.111 260);
+  --color-term-mauve: oklch(78.7% 0.119 305);
+  --color-term-peach: oklch(82.4% 0.101 53);
+  --color-term-teal: oklch(85.8% 0.079 183);
+  --color-term-pink: oklch(87.0% 0.075 336);
+  --color-term-sapphire: oklch(79.1% 0.096 229);
+  --color-backdrop: oklch(18.3% 0.020 284 / 0.72);
+  --font-display: "JetBrains Mono", ui-monospace, monospace;
+  --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-outlier: var(--font-display);
+  --radius-card: 8px; --radius-control: 6px; --radius-pill: 999px; --rule-hair: 1px; --shadow-card: none;
+  --tracking-display: -0.03em; --nav-height: 64px;
+}

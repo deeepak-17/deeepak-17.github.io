@@ -12,7 +12,7 @@ export const CONTENT = deepFreeze({
   profile: {
     name: "Deepak S",
     headline: "I build backends and make models fit.",
-    pitch: "Final-year CS student building backend systems and applied ML.",
+    pitch: "Deepak S, final-year CS student, building backend systems and applied ML.",
     email: "deepaksenthilkumar242@gmail.com",
     linkedin: "https://www.linkedin.com/in/deepak-senthilkumar-66674a2a5",
     github: "https://github.com/deeepak-17",

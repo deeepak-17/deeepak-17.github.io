@@ -1,6 +1,7 @@
 /* Builds the sections below the hero from CONTENT. Skips (and leaves empty) any section that failed validation. */
 
 import { escapeHtml as esc } from "../terminal/commands.js";
+import { CLASP_DIAGRAM } from "./clasp-diagram.js";
 
 const heading = (id, title, lead) => `
   <div class="container section__head" data-reveal>
@@ -30,35 +31,6 @@ function skillsHtml({ skills }) {
   return `${heading("skills", "Python, PyTorch and FastAPI, mostly.")}
     <div class="container skills__grid" data-reveal>${groups}</div>`;
 }
-
-const CLASP_DIAGRAM = `
-  <svg viewBox="0 0 480 420" role="img" aria-labelledby="clasp-svg-title clasp-svg-desc">
-    <title id="clasp-svg-title">CLASP architecture</title>
-    <desc id="clasp-svg-desc">Six client repositories keep their code local and train adapters. Updates flow to two clusters and are merged by SVD-based low-rank aggregation. Base, cluster and client adapters stack on DeepSeek-Coder. A registry versions adapters and a HumanEval gate triggers rollback.</desc>
-    <g data-g="problem">
-      ${[0, 1, 2, 3, 4, 5].map((i) => `<rect class="dg-box" x="${12 + i * 77}" y="12" width="66" height="40" rx="6"/><text class="dg-text" x="${45 + i * 77}" y="36" text-anchor="middle">repo ${i + 1}</text>`).join("")}
-    </g>
-    <g data-g="clients">
-      ${[0, 1, 2].map((i) => `<path class="dg-line" d="M${45 + i * 77} 52 L130 120"/>`).join("")}
-      ${[3, 4, 5].map((i) => `<path class="dg-line" d="M${45 + i * 77} 52 L350 120"/>`).join("")}
-      <circle class="dg-node" cx="130" cy="132" r="14"/><text class="dg-text" x="152" y="136">cluster A</text>
-      <circle class="dg-node" cx="350" cy="132" r="14"/><text class="dg-text" x="372" y="136">cluster B</text>
-      <text class="dg-text dg-text--accent" x="240" y="176" text-anchor="middle">SVD low-rank aggregation</text>
-      <text class="dg-text dg-text--muted" x="240" y="194" text-anchor="middle">differentially private updates</text>
-    </g>
-    <g data-g="layers">
-      <rect class="dg-box dg-box--accent" x="120" y="214" width="240" height="30" rx="6"/><text class="dg-text" x="240" y="234" text-anchor="middle">client adapter</text>
-      <rect class="dg-box dg-box--accent" x="120" y="248" width="240" height="30" rx="6"/><text class="dg-text" x="240" y="268" text-anchor="middle">cluster adapter</text>
-      <rect class="dg-box" x="120" y="282" width="240" height="30" rx="6"/><text class="dg-text" x="240" y="302" text-anchor="middle">base: DeepSeek-Coder (frozen)</text>
-    </g>
-    <g data-g="registry">
-      <path class="dg-line" d="M240 312 L240 336"/>
-      <rect class="dg-box" x="60" y="336" width="360" height="72" rx="6"/>
-      <text class="dg-text" x="240" y="358" text-anchor="middle">adapter registry (FastAPI)</text>
-      <text class="dg-text dg-text--muted" x="240" y="378" text-anchor="middle">versioned, checksum-audited, NF4 on 4 GB VRAM</text>
-      <text class="dg-text dg-text--accent" x="240" y="398" text-anchor="middle">HumanEval gate, rollback on regression</text>
-    </g>
-  </svg>`;
 
 function projectHtml(project, email) {
   const steps = project.steps

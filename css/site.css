@@ -3,6 +3,7 @@
  * axes: dark/mono/chromatic-violet · posture: restrained · contrast: pass · fold: pass · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, a dark mono dev portfolio is a known genre; the CLASP diagram carries the resume's own facts (3 adapter layers, 6 clients, 4 GB VRAM, HumanEval gate) so the page belongs to this project only */
 /* waive 22: Catppuccin Mocha is the owner's existing identity; its neutrals run chroma 0.02 to 0.04, above the 0.018 tint ceiling */
+/* waive 10a: the CLASP diagram draws its connector lines with stroke-dashoffset on a few short SVG paths; cheap and confined to the one scroll pattern */
 /* waive 64: mono is the material (the site is a shell), so labels and nav links use the display mono */
 @import url("./tokens.css");
 @import url("./base.css");
@@ -106,6 +107,10 @@ kbd { font-family: var(--font-display); font-size: var(--text-xs); padding: 0 va
 .dg-text { fill: var(--color-ink); font-family: var(--font-display); font-size: 12px; }
 .dg-text--muted { fill: var(--color-muted); }
 .dg-text--accent { fill: var(--color-accent); }
+.dg-flow { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.dg-dot { fill: var(--color-accent); opacity: 0; }
+.dg-lock__body { fill: var(--color-term-yellow); }
+.dg-lock__shackle { fill: none; stroke: var(--color-term-yellow); stroke-width: 1.25; }
 /* GSAP only toggles inline opacity/transform on .clasp__step and [data-g]; .is-active marks the current step */
 .clasp__step.is-active h3 { color: var(--color-accent); }
 @media (max-width: 60rem) {

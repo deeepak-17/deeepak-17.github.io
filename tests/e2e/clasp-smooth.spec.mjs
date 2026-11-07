@@ -6,8 +6,11 @@ test("a wheel notch eases the CLASP steps over several frames instead of snappin
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
   await waitForLayout(page);
-  const top = await page.evaluate(() => document.querySelector(".clasp").getBoundingClientRect().top + scrollY);
-  await page.evaluate((y) => scrollTo(0, y), top + 50);
+  // just before step 2 takes focus (timeline 2.9 of ~12), so the next wheel notch crosses a transition
+  await page.evaluate(() => {
+    const st = window.ScrollTrigger.getAll().find((t) => t.pin);
+    scrollTo(0, st.start + (st.end - st.start) * (2.9 / st.animation.duration()));
+  });
   await page.waitForTimeout(1500);
   await page.evaluate(() => {
     window.__frames = [];

@@ -36,6 +36,6 @@
   --font-display: "JetBrains Mono", ui-monospace, monospace;
   --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   --font-outlier: var(--font-display);
-  --radius-card: 8px; --radius-control: 6px; --radius-pill: 999px; --rule-hair: 1px; --shadow-card: none;
+  --radius-card: 8px; --radius-control: 6px; --radius-pill: 999px; --rule-hair: 1px; --shadow-card: none; --shadow-raised: 0 1px 2px oklch(10% 0.01 284 / 0.4);
   --tracking-display: -0.03em; --nav-height: 64px;
 }

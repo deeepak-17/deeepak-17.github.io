@@ -83,7 +83,7 @@ function projectsHtml({ projects }) {
 }
 
 function contactHtml({ profile }) {
-  return `${heading("contact", "Let's build something.", "Open to SWE and ML roles. Email is fastest.")}
+  return `${heading("contact", "Let’s build something.", "Open to SWE and ML roles. Email is fastest.")}
     <div class="container contact" data-reveal>
       <ul class="contact__links">
         <li><span class="contact__key">email</span><a href="mailto:${esc(profile.email)}" id="contact-email">${esc(profile.email)}</a><button class="copy-btn" type="button" id="copy-email">copy</button><span class="copy-status" id="copy-status" role="status"></span></li>

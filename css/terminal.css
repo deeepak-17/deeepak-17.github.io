@@ -1,6 +1,6 @@
 /* Terminal drawer and boot screen. Tokens come from site.css's imports. */
 
-.term-toggle { position: fixed; right: var(--space-lg); bottom: var(--space-lg); z-index: var(--z-raised); min-width: 52px; min-height: 52px; padding: 0 var(--space-md); background: var(--color-paper-3); color: var(--color-term-green); border: var(--rule-hair) solid var(--color-rule-strong); border-radius: var(--radius-card); font-family: var(--font-display); font-size: var(--text-md); font-weight: 700; cursor: pointer; box-shadow: 0 1px 2px oklch(10% 0.01 284 / 0.4); transition: border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
+.term-toggle { position: fixed; right: var(--space-lg); bottom: var(--space-lg); z-index: var(--z-raised); min-width: 52px; min-height: 52px; padding: 0 var(--space-md); background: var(--color-paper-3); color: var(--color-term-green); border: var(--rule-hair) solid var(--color-rule-strong); border-radius: var(--radius-card); font-family: var(--font-display); font-size: var(--text-md); font-weight: 700; cursor: pointer; box-shadow: var(--shadow-raised); transition: border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
 .term-toggle:hover { border-color: var(--color-accent); }
 .term-toggle:active { transform: translateY(1px); }
 .term-toggle[aria-expanded="true"] { visibility: hidden; }

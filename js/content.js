@@ -27,12 +27,12 @@ export const CONTENT = deepFreeze({
       {
         institution: "Amrita Vishwa Vidyapeetham",
         programme: "B.Tech in Computer Science",
-        dates: "Aug 2023 – May 2027",
+        dates: "Aug 2023 to May 2027",
       },
       {
         institution: "IIT Madras",
         programme: "B.S. in Data Science and Applications",
-        dates: "Jan 2024 – present",
+        dates: "Jan 2024 to present",
       },
     ],
   },

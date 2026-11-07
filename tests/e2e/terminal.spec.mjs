@@ -1,10 +1,11 @@
 import { test, expect } from "@playwright/test";
-import { skipBoot } from "./helpers.mjs";
+import { skipBoot, waitForLayout } from "./helpers.mjs";
 
 test.beforeEach(async ({ page }) => {
   await skipBoot(page);
   await page.goto("/");
   await expect(page.locator("#about")).toContainText("IIT Madras");
+  await waitForLayout(page);
 });
 
 const drawer = (page) => page.locator("#term-drawer");

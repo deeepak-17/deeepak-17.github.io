@@ -12,7 +12,12 @@ import { runBoot } from "./boot.js";
 
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-function scrollToId(id) {
+const LAYOUT_WAIT_MS = 1200;
+let layoutSettled = Promise.resolve();
+
+/** Waits (briefly) for the CLASP pin to exist, so a smooth scroll is not cut short by its setup. */
+async function scrollToId(id) {
+  await Promise.race([layoutSettled, new Promise((r) => setTimeout(r, LAYOUT_WAIT_MS))]);
   const target = document.getElementById(id === "top" ? "hero" : id);
   target?.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
 }
@@ -30,7 +35,9 @@ const validity = validateContent(CONTENT);
 if (!validity.ok) console.error("content invalid:", validity.errors.join(", "));
 renderSite(document, CONTENT, validity);
 initReveal(document);
-initClaspChapter(document.querySelector(".clasp"));
+layoutSettled = initClaspChapter(document.querySelector(".clasp")).finally(() => {
+  document.documentElement.dataset.layout = "ready";
+});
 
 const drawer = createDrawer({ root: document.body, toggle: document.getElementById("term-toggle"), reducedMotion });
 const siteApi = Object.freeze({

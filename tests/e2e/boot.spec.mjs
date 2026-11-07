@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { skipBoot, waitForApp } from "./helpers.mjs";
+import { skipBoot, waitForApp, waitForLayout } from "./helpers.mjs";
 
 test("first visit boots, then lands on the hero", async ({ page }) => {
   await page.goto("/");
@@ -68,6 +68,7 @@ test.describe("after boot", () => {
   test("the hero command scrolls to projects", async ({ page }) => {
     await page.goto("/");
     await waitForApp(page);
+    await waitForLayout(page);
     await page.locator("#hero-cmd").click();
     await expect(page.locator("#projects-title")).toBeInViewport({ timeout: 1500 });
   });

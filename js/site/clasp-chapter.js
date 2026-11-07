@@ -63,28 +63,27 @@ function buildTimeline(gsap, section) {
 }
 
 /**
+ * Loads GSAP once the page has loaded (idle), so the pin exists before anyone scrolls to it.
+ * Building it mid-scroll would interrupt a smooth scroll in progress.
  * @param {HTMLElement | null} section the .clasp element
- * @returns {Promise<() => void>} teardown
+ * @returns {Promise<() => void>} resolves once the chapter is set up (or skipped); value is a teardown
  */
 export function initClaspChapter(section) {
-  if (!section || !("IntersectionObserver" in window)) return Promise.resolve(() => {});
-  return new Promise((resolve) => {
-    const io = new IntersectionObserver(
-      async (entries) => {
-        if (!entries.some((e) => e.isIntersecting)) return;
-        io.disconnect();
-        try {
-          const gsap = await loadGsap();
-          const mm = gsap.matchMedia();
-          mm.add(MOTION_QUERY, () => buildTimeline(gsap, section));
-          resolve(() => mm.revert());
-        } catch (err) {
-          console.warn("clasp-chapter: GSAP unavailable, static layout", err);
-          resolve(() => {});
-        }
-      },
-      { rootMargin: "100% 0px" }
-    );
-    io.observe(section);
+  if (!section) return Promise.resolve(() => {});
+  const whenIdle = () =>
+    new Promise((resolve) => {
+      const go = () => ("requestIdleCallback" in window ? requestIdleCallback(resolve, { timeout: 800 }) : setTimeout(resolve, 200));
+      if (document.readyState === "complete") go(); else window.addEventListener("load", go, { once: true });
+    });
+  return whenIdle().then(async () => {
+    try {
+      const gsap = await loadGsap();
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_QUERY, () => buildTimeline(gsap, section));
+      return () => mm.revert();
+    } catch (err) {
+      console.warn("clasp-chapter: GSAP unavailable, static layout", err);
+      return () => {};
+    }
   });
 }

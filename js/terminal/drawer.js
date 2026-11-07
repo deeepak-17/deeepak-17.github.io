@@ -9,7 +9,7 @@ const FOCUSABLE = "button, [href], input, [tabindex]:not([tabindex='-1'])";
 
 const MARKUP = `
   <div class="term-backdrop" id="term-backdrop" hidden></div>
-  <div class="term-drawer" id="term-drawer" role="dialog" aria-modal="true" aria-label="Terminal" hidden>
+  <div class="term-drawer" id="term-drawer" role="dialog" aria-modal="true" aria-label="Terminal" tabindex="-1" hidden>
     <div class="term-head">
       <span class="term-head__path"><span class="prompt-user">deepak@portfolio</span> <span class="prompt-path">~</span></span>
       <button class="term-close" id="term-close" type="button" aria-label="Close terminal">esc</button>
@@ -78,7 +78,9 @@ export function createDrawer({ root, toggle, reducedMotion }) {
         out.line();
       });
     }
-    input.focus();
+    // On touch screens, keep the keyboard down so the command chips stay usable.
+    if (window.matchMedia("(pointer: coarse)").matches) el.focus({ preventScroll: true });
+    else input.focus();
   }
 
   function close() {
@@ -144,7 +146,10 @@ export function createDrawer({ root, toggle, reducedMotion }) {
   }
 
   input.addEventListener("keydown", onInputKey);
-  el.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); else trapFocus(e); });
+  el.addEventListener("keydown", (e) => {
+    if (e.defaultPrevented) return; // already handled by the input (Tab completion, Escape)
+    if (e.key === "Escape") close(); else trapFocus(e);
+  });
   el.querySelector("#term-close").addEventListener("click", close);
   el.querySelectorAll(".term-chips button").forEach((b) => b.addEventListener("click", () => submit(b.dataset.cmd)));
   body.addEventListener("click", (e) => { if (!window.getSelection()?.toString() && e.target === body) input.focus(); });

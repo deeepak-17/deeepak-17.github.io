@@ -23,7 +23,8 @@ body.term-locked { overflow: hidden; }
 .term-row { min-height: 1.55em; }
 .term-output a { color: var(--color-term-sapphire); }
 .term-line { display: flex; align-items: baseline; gap: var(--space-xs); }
-.term-input { flex: 1; min-width: 0; padding: 0; background: transparent; color: var(--color-ink); border: 0; font: inherit; caret-color: var(--color-title); }
+.term-input { flex: 1; min-width: 0; padding: 0; background: transparent; color: var(--color-ink); border: 0; font: inherit; font-size: max(1rem, 1em); caret-color: var(--color-title); }
+.term-drawer:focus-visible { outline: none; }
 .term-input:focus-visible { outline: none; }
 .term-line:focus-within { box-shadow: inset 2px 0 0 var(--color-focus); padding-left: var(--space-xs); }
 

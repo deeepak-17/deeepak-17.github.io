@@ -5,7 +5,7 @@ const GSAP_SRC = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js
 const SCROLL_TRIGGER_SRC = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js";
 const MOTION_QUERY = "(min-width: 40rem) and (prefers-reduced-motion: no-preference)";
 const PIN_LENGTH = "+=200%";
-const DIM = 0.2;
+const DIM = 0.5;
 /** Which diagram groups each step reveals. */
 const STEP_GROUPS = [["problem"], ["clients", "layers"], ["registry"], []];
 

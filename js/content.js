@@ -40,7 +40,7 @@ export const CONTENT = deepFreeze({
     { key: "Focus", value: "Backend and applied ML" },
     { key: "Stack", value: "Python, PyTorch, FastAPI" },
     { key: "Cloud", value: "AWS EKS, Docker, Kubernetes" },
-    { key: "Theme", value: "Catppuccin Mocha" },
+    { key: "Studying", value: "Amrita CSE and IIT Madras BS DS" },
   ],
   skills: [
     {

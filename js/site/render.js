@@ -60,12 +60,14 @@ const CLASP_DIAGRAM = `
     </g>
   </svg>`;
 
-function projectHtml(project) {
+function projectHtml(project, email) {
   const steps = project.steps
     .map((s, i) => {
       const isLast = i === project.steps.length - 1;
       const stack = isLast ? `<ul class="clasp__stack" aria-label="Stack">${project.stack.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>` : "";
-      const repo = isLast && project.repoUrl ? `<a class="btn btn--ghost" href="${esc(project.repoUrl)}" target="_blank" rel="noopener">source on GitHub</a>` : "";
+      const repo = !isLast ? "" : project.repoUrl
+        ? `<a class="btn btn--ghost" href="${esc(project.repoUrl)}" target="_blank" rel="noopener">source on GitHub</a>`
+        : `<a class="clasp__ask" href="mailto:${esc(email)}?subject=${encodeURIComponent(project.title)}">Ask me about ${esc(project.title)}</a>`;
       return `<li class="clasp__step" data-step="${i}"><h3>${esc(s.title)}</h3><p>${esc(s.body)}</p>${stack}${repo}</li>`;
     })
     .join("");
@@ -77,13 +79,13 @@ function projectHtml(project) {
     </div>`;
 }
 
-function projectsHtml({ projects }) {
+function projectsHtml({ projects, profile }) {
   return `${heading("projects", "CLASP personalises a code LLM without collecting the code.")}
-    ${projects.map(projectHtml).join("")}`;
+    ${projects.map((p) => projectHtml(p, profile.email)).join("")}`;
 }
 
 function contactHtml({ profile }) {
-  return `${heading("contact", "Let’s build something.", "Open to SWE and ML roles. Email is fastest.")}
+  return `${heading("contact", "Hiring for backend or ML? Email is fastest.")}
     <div class="container contact" data-reveal>
       <ul class="contact__links">
         <li><span class="contact__key">email</span><a href="mailto:${esc(profile.email)}" id="contact-email">${esc(profile.email)}</a><button class="copy-btn" type="button" id="copy-email">copy</button><span class="copy-status" id="copy-status" role="status"></span></li>
@@ -107,7 +109,14 @@ const SECTIONS = [
  * @param {object} content
  * @param {{ valid: Record<string, boolean> }} validity
  */
+function renderFacts(root, facts) {
+  const dl = root.querySelector(".facts");
+  if (!dl || !Array.isArray(facts) || facts.length === 0) return;
+  dl.innerHTML = facts.map(({ key, value }) => `<div><dt>${esc(key)}</dt><dd>${esc(value)}</dd></div>`).join("");
+}
+
 export function renderSite(root, content, validity) {
+  renderFacts(root, content.neofetch);
   for (const [id, key, build] of SECTIONS) {
     const el = root.querySelector(`#${id}`);
     if (!el) continue;

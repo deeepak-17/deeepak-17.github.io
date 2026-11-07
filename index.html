@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#11111b" />
+  <title>Deepak S — Software Engineer</title>
+  <meta name="description" content="Deepak S — CSE undergrad building backend systems and ML. Terminal-style portfolio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ TERMINAL VIEW ============ -->
+  <div id="terminal-view">
+    <div class="term-window" id="term-window">
+      <div class="term-titlebar">
+        <div class="term-dots">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+        <div class="term-title">deepak@portfolio: ~</div>
+        <div class="term-hint">type <kbd>help</kbd></div>
+      </div>
+      <div class="term-body" id="term-body">
+        <div id="term-output" role="log" aria-live="polite"></div>
+        <div class="term-input-line" id="term-input-line" style="display:none;">
+          <span class="prompt-user">deepak@portfolio</span><span class="prompt-sep"> </span><span class="prompt-path">~</span><span class="prompt-char"> ❯ </span><span id="term-typed"></span><span class="cursor" id="cursor">&nbsp;</span>
+        </div>
+        <input type="text" id="term-hidden-input" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal command input" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ UI VIEW ============ -->
+  <div id="ui-view" hidden>
+    <nav class="navbar">
+      <a class="nav-logo" href="#hero">deepak<span class="accent">@</span>portfolio<span class="nav-cursor">▊</span></a>
+      <div class="nav-links" id="nav-links">
+        <a href="#about">about</a>
+        <a href="#skills">skills</a>
+        <a href="#projects">projects</a>
+        <a href="#contact">contact</a>
+        <button class="btn-terminal" id="btn-to-terminal" title="Back to terminal">❯_ terminal</button>
+      </div>
+      <button class="nav-burger" id="nav-burger" aria-label="Menu">☰</button>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero" id="hero">
+      <div class="hero-text">
+        <p class="hero-eyebrow">// hello, world</p>
+        <h1>Deepak&nbsp;S</h1>
+        <p class="hero-sub">I build <span class="hl-green">backend systems</span> and <span class="hl-mauve">ML pipelines</span> — from Go microservices to federated LoRA fine-tuning.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects">view projects</a>
+          <a class="btn btn-ghost" href="assets/resume.pdf" download>resume ↓</a>
+        </div>
+      </div>
+      <div class="neofetch-card" aria-label="System info card">
+        <pre class="neofetch-art">
+   ██████╗
+   ██╔══██╗
+   ██║  ██║
+   ██║  ██║
+   ██████╔╝
+   ╚═════╝</pre>
+        <div class="neofetch-stats">
+          <p><span class="nf-key">deepak</span>@<span class="nf-key">portfolio</span></p>
+          <p class="nf-line">─────────────────</p>
+          <p><span class="nf-key">OS</span>: Ubuntu · macOS</p>
+          <p><span class="nf-key">Shell</span>: zsh + Starship</p>
+          <p><span class="nf-key">Terminal</span>: Ghostty</p>
+          <p><span class="nf-key">Theme</span>: Catppuccin Mocha</p>
+          <p><span class="nf-key">Editor</span>: Neovim · VS Code</p>
+          <p><span class="nf-key">Focus</span>: Backend · ML · Systems</p>
+          <p class="nf-palette"><span style="background:var(--red)"></span><span style="background:var(--peach)"></span><span style="background:var(--yellow)"></span><span style="background:var(--green)"></span><span style="background:var(--teal)"></span><span style="background:var(--blue)"></span><span style="background:var(--mauve)"></span><span style="background:var(--pink)"></span></p>
+        </div>
+      </div>
+    </header>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <h2><span class="section-prompt">❯</span> about</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I'm a final-year Computer Science undergrad at <strong>Amrita Vishwa Vidyapeetham</strong> (Coimbatore), simultaneously pursuing the <strong>BS in Data Science at IIT Madras</strong>. I like problems that sit at the intersection of systems and machine learning — making models faster, smaller, more private, and actually deployable.</p>
+          <p>Recent work spans federated fine-tuning of code LLMs, fraud detection on severely imbalanced banking data, text-aware video compression, and production-style Go microservices. When I'm not shipping, I'm grinding DSA in C++ or ricing my terminal.</p>
+        </div>
+        <div class="about-cards">
+          <div class="mini-card">
+            <span class="mini-num">2</span>
+            <span class="mini-label">degrees in parallel<br/>Amrita CSE + IITM BS DS</span>
+          </div>
+          <div class="mini-card">
+            <span class="mini-num">4+</span>
+            <span class="mini-label">hackathons<br/>incl. national bank finale</span>
+          </div>
+          <div class="mini-card">
+            <span class="mini-num">∞</span>
+            <span class="mini-label">terminal tabs open<br/>at any given time</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section" id="skills">
+      <h2><span class="section-prompt">❯</span> skills</h2>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <h3 class="sg-title" style="color:var(--blue)">languages/</h3>
+          <div class="chips"><span>C++</span><span>Go</span><span>Python</span><span>JavaScript</span><span>Bash</span><span>SQL</span></div>
+        </div>
+        <div class="skill-group">
+          <h3 class="sg-title" style="color:var(--green)">backend/</h3>
+          <div class="chips"><span>Go microservices</span><span>FastAPI</span><span>Redis</span><span>Docker</span><span>REST APIs</span><span>gRPC</span></div>
+        </div>
+        <div class="skill-group">
+          <h3 class="sg-title" style="color:var(--mauve)">ml/</h3>
+          <div class="chips"><span>PyTorch</span><span>LightGBM</span><span>LoRA / PEFT</span><span>Federated Learning</span><span>Differential Privacy</span><span>HuggingFace</span></div>
+        </div>
+        <div class="skill-group">
+          <h3 class="sg-title" style="color:var(--peach)">frontend/</h3>
+          <div class="chips"><span>Next.js</span><span>React</span><span>Tailwind</span><span>Recharts</span></div>
+        </div>
+        <div class="skill-group">
+          <h3 class="sg-title" style="color:var(--teal)">tools/</h3>
+          <div class="chips"><span>Linux</span><span>Git</span><span>tmux</span><span>LaTeX</span><span>Neovim</span><span>GitHub Actions</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section" id="projects">
+      <h2><span class="section-prompt">❯</span> projects</h2>
+      <div class="projects-grid">
+
+        <article class="project-card" id="proj-clasp">
+          <div class="pc-top">
+            <span class="pc-folder" style="color:var(--mauve)">📁 clasp/</span>
+            <a class="pc-link" href="https://github.com/deeepak-17" target="_blank" rel="noopener" aria-label="Open project on GitHub">↗</a>
+          </div>
+          <h3>CLASP</h3>
+          <p class="pc-tag-line">Federated LoRA for secure, personalized code generation</p>
+          <p>Clustered LoRA adapter stacking on a frozen DeepSeek-Coder-6.7B — clients train tiny rank-8 adapters locally, FedProx aggregates per cluster, and DP-SGD + mTLS keep code private. Two adapters compose at inference for cluster + client personalization.</p>
+          <div class="pc-tags"><span>PyTorch</span><span>PEFT</span><span>Flower</span><span>FedProx</span><span>Opacus</span><span>vLLM</span></div>
+        </article>
+
+        <article class="project-card" id="proj-mcw">
+          <div class="pc-top">
+            <span class="pc-folder" style="color:var(--blue)">📁 mcw/</span>
+            <a class="pc-link" href="https://github.com/deeepak-17" target="_blank" rel="noopener" aria-label="Open project on GitHub">↗</a>
+          </div>
+          <h3>MCW</h3>
+          <p class="pc-tag-line">Text-aware video compression for screen recordings</p>
+          <p>Neural text detection (CRAFT + RefineNet) drives adaptive DCT-quadtree partitioning: text regions get high-quality encoding, backgrounds get aggressive compression, and SSIM-based temporal filtering skips redundant frames. CPU-deployable at 1080p/30fps.</p>
+          <div class="pc-tags"><span>Python</span><span>OpenCV</span><span>CRAFT</span><span>DCT</span><span>SSIM</span></div>
+        </article>
+
+        <article class="project-card" id="proj-medistore">
+          <div class="pc-top">
+            <span class="pc-folder" style="color:var(--green)">📁 medistore/</span>
+            <a class="pc-link" href="https://github.com/deeepak-17" target="_blank" rel="noopener" aria-label="Open project on GitHub">↗</a>
+          </div>
+          <h3>MediStore</h3>
+          <p class="pc-tag-line">Full-stack medical eCommerce on Go microservices</p>
+          <p>Independently deployable Go services behind a Next.js storefront — product catalog, cart, and orders — with Redis for caching/sessions and Docker Compose for one-command spin-up. Built to look and operate like production, not a class project.</p>
+          <div class="pc-tags"><span>Go</span><span>Next.js</span><span>Redis</span><span>Docker</span><span>REST</span></div>
+        </article>
+
+        <article class="project-card" id="proj-cybershield">
+          <div class="pc-top">
+            <span class="pc-folder" style="color:var(--red)">📁 cybershield/</span>
+            <a class="pc-link" href="https://github.com/deeepak-17" target="_blank" rel="noopener" aria-label="Open project on GitHub">↗</a>
+          </div>
+          <h3>CyberShield — Mule Detection</h3>
+          <p class="pc-tag-line">AI/ML mule account classification · national finale, IIT Hyderabad</p>
+          <p>LightGBM classifier over a 91-feature behavioral set on ~9,000 bank accounts with only 81 mules — extreme class imbalance handled to hit 100% precision at 75% recall. Built for the PSB × Bank of India CyberShield hackathon with team Lowkey Legends.</p>
+          <div class="pc-tags"><span>LightGBM</span><span>Pandas</span><span>Imbalanced ML</span><span>Feature Engineering</span></div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <h2><span class="section-prompt">❯</span> contact</h2>
+      <div class="contact-box">
+        <p class="contact-lead">Open to SWE / ML roles and interesting collaborations. The fastest way to reach me:</p>
+        <div class="contact-links">
+          <a href="https://github.com/deeepak-17" target="_blank" rel="noopener"><span class="cl-key">github</span> deeepak-17</a>
+          <a href="mailto:your.email@example.com"><span class="cl-key">email</span> your.email@example.com</a>
+          <a href="#" target="_blank" rel="noopener"><span class="cl-key">linkedin</span> /in/your-handle</a>
+        </div>
+        <a class="btn btn-primary" href="assets/resume.pdf" download>download resume ↓</a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p><span class="prompt-user">deepak@portfolio</span> <span class="prompt-path">~</span> <span class="prompt-char">❯</span> echo "built with caffeine & Catppuccin" <span class="footer-year">· 2026</span></p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

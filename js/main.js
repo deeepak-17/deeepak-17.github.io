@@ -6,6 +6,9 @@ import { initReveal } from "./site/reveal.js";
 import { initClaspChapter } from "./site/clasp-chapter.js";
 import { createDrawer } from "./terminal/drawer.js";
 import { createCommands } from "./terminal/commands.js";
+import { createSafeStorage } from "./storage.js";
+import { shouldBoot, BOOT_SEEN_KEY } from "./boot-decision.js";
+import { runBoot } from "./boot.js";
 
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -38,4 +41,45 @@ const siteApi = Object.freeze({
 });
 drawer.attach(createCommands({ content: CONTENT, out: drawer.out, site: siteApi }));
 
-document.documentElement.classList.add("is-ready");
+document.getElementById("hero-cmd")?.addEventListener("click", () => drawer.run("cd projects"));
+wireCopyEmail(CONTENT.profile.email);
+const year = document.getElementById("footer-year");
+if (year) year.textContent = String(new Date().getFullYear());
+
+document.documentElement.dataset.app = "ready";
+startUp();
+
+function readSessionStorage() {
+  try {
+    return window.sessionStorage;
+  } catch {
+    return undefined;
+  }
+}
+
+async function startUp() {
+  const storage = createSafeStorage(readSessionStorage());
+  const env = { storage, hash: location.hash, search: location.search, reducedMotion: reducedMotion() };
+  if (shouldBoot(env)) {
+    await runBoot({ root: document.body });
+    storage.set(BOOT_SEEN_KEY, "1");
+  }
+  document.documentElement.classList.add("is-ready");
+  if (new URLSearchParams(location.search).get("view") === "terminal") drawer.open();
+}
+
+function wireCopyEmail(email) {
+  const button = document.getElementById("copy-email");
+  const status = document.getElementById("copy-status");
+  const link = document.getElementById("contact-email");
+  if (!button || !status) return;
+  button.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      status.textContent = "copied";
+    } catch {
+      if (link) window.getSelection()?.selectAllChildren(link);
+      status.textContent = "Selected. Press Ctrl/Cmd+C to copy.";
+    }
+  });
+}

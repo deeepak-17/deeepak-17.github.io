@@ -4,3 +4,8 @@ export async function skipBoot(page) {
     try { sessionStorage.setItem("portfolio.bootSeen", "1"); } catch {}
   });
 }
+
+/** Wait until main.js has wired every handler. */
+export async function waitForApp(page) {
+  await page.waitForFunction(() => document.documentElement.dataset.app === "ready");
+}

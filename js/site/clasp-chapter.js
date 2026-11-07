@@ -6,6 +6,7 @@ const SCROLL_TRIGGER_SRC = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/S
 const MOTION_QUERY = "(min-width: 40rem) and (prefers-reduced-motion: no-preference)";
 const PIN_LENGTH = "+=200%";
 const DIM = 0.5;
+const SCRUB_SMOOTHING_S = 1;
 /** Which diagram groups each step reveals. */
 const STEP_GROUPS = [["problem"], ["clients", "layers"], ["registry"], []];
 
@@ -47,7 +48,7 @@ function buildTimeline(gsap, section) {
       pin: section.querySelector(".clasp__pin"),
       start: () => `top top+=${navOffset()}`,
       end: PIN_LENGTH,
-      scrub: true,
+      scrub: SCRUB_SMOOTHING_S, // eases toward the scroll position so mouse-wheel notches don't snap
       invalidateOnRefresh: true,
       onUpdate: (self) => {
         const active = Math.min(steps.length - 1, Math.floor(self.progress * steps.length));

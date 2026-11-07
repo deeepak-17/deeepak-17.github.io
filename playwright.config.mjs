@@ -5,10 +5,10 @@ export default defineConfig({
   testMatch: "*.spec.mjs",
   fullyParallel: true,
   reporter: [["list"]],
-  use: { baseURL: "http://127.0.0.1:8000" },
+  use: { baseURL: "http://127.0.0.1:8100" },
   webServer: {
-    command: "python3 scripts/serve.py 8000",
-    url: "http://127.0.0.1:8000",
+    command: "python3 scripts/serve.py 8100",
+    url: "http://127.0.0.1:8100",
     reuseExistingServer: false,
   },
   projects: [

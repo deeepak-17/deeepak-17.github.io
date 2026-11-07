@@ -1,0 +1,13 @@
+{
+  "name": "deepak-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test \"tests/unit/*.test.mjs\"",
+    "test:cov": "node --test --experimental-test-coverage \"tests/unit/*.test.mjs\"",
+    "e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.0"
+  }
+}

@@ -152,6 +152,9 @@ main { padding-bottom: var(--space-3xl); }
   .js:not(.is-ready) [data-enter], .js [data-reveal]:not(.is-seen) { opacity: 1; transform: none; }
 }
 
+.term-open { display: inline-flex; align-items: center; padding: var(--space-3xs); background: transparent; border: 0; border-radius: var(--space-2xs); color: inherit; cursor: pointer; }
+.term-open:hover kbd { border-color: var(--color-accent); color: var(--color-ink); }
+
 /* disabled state for every control */
 .btn:disabled, .btn[aria-disabled="true"], .hero__cmd:disabled, .copy-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 

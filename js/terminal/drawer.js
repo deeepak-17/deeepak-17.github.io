@@ -27,6 +27,9 @@ const MARKUP = `
     </div>
   </div>`;
 
+/** Physical key left of 1. Matches by code too, because layouts like ABC-India or US-International report it as "Dead" or another symbol. */
+const isBackquote = (e) => e.key === "`" || e.code === "Backquote";
+
 const isEditable = (el) =>
   el instanceof HTMLElement && (el.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(el.tagName));
 
@@ -108,7 +111,7 @@ export function createDrawer({ root, toggle, reducedMotion }) {
     const history = commands?.history;
     if (e.key === "Enter") { e.preventDefault(); submit(input.value); return; }
     if (e.key === "Escape") { e.preventDefault(); close(); return; }
-    if (e.key === "`" && input.value === "") { e.preventDefault(); close(); return; }
+    if (isBackquote(e) && input.value === "") { e.preventDefault(); close(); return; }
     if (e.key === "ArrowUp" && history) { e.preventDefault(); const v = history.prev(); if (v !== null) input.value = v; return; }
     if (e.key === "ArrowDown" && history) { e.preventDefault(); input.value = history.next(); return; }
     if (e.key === "Tab" && !e.shiftKey && input.value.trim()) {
@@ -138,7 +141,7 @@ export function createDrawer({ root, toggle, reducedMotion }) {
 
   function onGlobalKey(e) {
     if (isOpen() || el.contains(e.target)) return;
-    const wantsToggle = e.key === "`" || (e.ctrlKey && e.key.toLowerCase() === "k");
+    const wantsToggle = isBackquote(e) || (e.ctrlKey && e.key.toLowerCase() === "k");
     if (!wantsToggle || e.metaKey || e.altKey) return;
     if (isEditable(document.activeElement)) return;
     e.preventDefault();

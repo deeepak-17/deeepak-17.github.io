@@ -49,6 +49,9 @@ const siteApi = Object.freeze({
 drawer.attach(createCommands({ content: CONTENT, out: drawer.out, site: siteApi }));
 
 document.getElementById("hero-cmd")?.addEventListener("click", () => drawer.run("cd projects"));
+document.addEventListener("click", (e) => {
+  if (e.target instanceof Element && e.target.closest(".term-open")) drawer.open();
+});
 wireCopyEmail(CONTENT.profile.email);
 const year = document.getElementById("footer-year");
 if (year) year.textContent = String(new Date().getFullYear());

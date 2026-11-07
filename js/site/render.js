@@ -65,7 +65,7 @@ function contactHtml({ profile }) {
         <li><span class="contact__key">github</span><a href="${esc(profile.github)}" target="_blank" rel="noopener">deeepak-17</a></li>
       </ul>
       <a class="btn btn--primary" href="${esc(profile.resumeUrl)}" download="Deepak_S_Resume.pdf">download resume</a>
-      <p class="contact__hint">Prefer a shell? Press <kbd>\`</kbd> anywhere.</p>
+      <p class="contact__hint">Prefer a shell? Press <button class="term-open" type="button" aria-label="Open the terminal"><kbd>\`</kbd></button> anywhere.</p>
     </div>`;
 }
 

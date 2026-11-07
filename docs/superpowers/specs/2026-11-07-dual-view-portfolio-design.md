@@ -110,17 +110,25 @@ portfolio/
    - The neofetch card stays as a static facts panel: OS, shell, editor, focus.
 3. **About**
    - A two-paragraph bio that mentions no hackathons or CyberShield.
-   - Two education fact cards:
-     - Amrita Vishwa Vidyapeetham, B.Tech CSE, '27
-     - IIT Madras, BS Data Science, year to be supplied by Deepak
-4. **Skills:** five groups (languages, backend, ml, frontend, tools) as chip lists, with no motion beyond the section reveal.
+   - Two education fact cards (no CGPA):
+     - Amrita Vishwa Vidyapeetham, B.Tech in Computer Science, Aug 2023 – May 2027
+     - IIT Madras, B.S. in Data Science and Applications, Jan 2024 – present
+4. **Skills:** four groups taken from the resume, as chip lists, with no motion beyond the section reveal.
+   - **Languages:** Python, C/C++, Java, JavaScript, TypeScript, SQL, Go, Bash
+   - **ML and AI:** PyTorch, TensorFlow/Keras, Hugging Face, PEFT (LoRA/QLoRA), Flower, Opacus, FAISS, scikit-learn, OpenCV
+   - **Backend and web:** FastAPI, Flask, Node.js, Express, Spring Boot, React, Next.js, Socket.io, REST APIs, microservices
+   - **Data and cloud:** PostgreSQL, MongoDB, Redis, AWS (EKS, RDS, S3, Cognito), Docker, Kubernetes, GitHub Actions, Git
 5. **Projects: CLASP** (the pinned chapter)
    - The track is about 300vh tall. A sticky pane holds the heading and a diagram drawn as inline SVG.
-   - The scroll-scrubbed steps are:
-     1. **Problem:** teams want a code assistant tuned to their own repos without sending private code to a server.
-     2. **Approach:** a frozen DeepSeek-Coder-6.7B sits at the centre. Clients train rank-8 LoRA adapters locally, and FedProx aggregates them per cluster. DP-SGD and mTLS protect the updates.
-     3. **Inference:** a cluster adapter and a client adapter stack on the base model.
-     4. **Stack and link:** PyTorch, PEFT, Flower, FedProx, Opacus, vLLM, as a plain list, plus a repo link if one is supplied.
+   - The scroll-scrubbed steps are below. All facts come from Resume-Master.pdf, and nothing is added beyond it.
+     1. **Problem:** personalise a code LLM for many teams without centralising their private code.
+     2. **Composition:** three QLoRA layers (base, cluster and client) are composed on DeepSeek-Coder. They're trained across 6 simulated federated clients under differential privacy, and cluster updates are combined with SVD-based low-rank aggregation.
+     3. **State registry:**
+        - A FastAPI service versions the adapters as immutable, checksum-audited artifacts.
+        - Serving is NF4-quantised to fit a 4 GB VRAM budget.
+        - A HumanEval gate triggers rollback.
+        - mTLS secures the traffic.
+     4. **Stack and link:** PyTorch, PEFT, Flower, Opacus, FastAPI, Docker, as a plain list, plus a repo link if one is supplied.
    - **Fallback:** below 40rem, with reduced motion, or if GSAP fails to load, it becomes a normal stacked layout with the diagram in its final state and the four steps as a list.
    - The SVG has a `<title>` and `<desc>` that describe the architecture.
 6. **Contact**
@@ -204,16 +212,17 @@ export const CONTENT = Object.freeze({
 - Add Open Graph and Twitter meta tags and an SVG favicon.
 - Update the README with the new structure, preview command, test commands and deploy steps.
 
-## 11. Inputs from Deepak
+## 11. Inputs
 
-These block deploy, not the build. Until they're supplied, `content.js` holds clearly named `TODO_` values, and `validateContent` warns about them.
+**Supplied (2026-11-07):**
+- **Email:** deepaksenthilkumar242@gmail.com
+- **LinkedIn:** https://www.linkedin.com/in/deepak-senthilkumar-66674a2a5
+- **Resume:** `/Users/deepak/Resumes/Resume-Master.pdf`, copied to `assets/Deepak_S_Resume.pdf` at build time. It contains the email and LinkedIn only, no phone number.
+- **Source of truth:** the resume. Where the old portfolio disagrees with it, the resume wins. The old portfolio's CLASP details (rank-8, FedProx, vLLM, 6.7B) and its skills (gRPC, Tailwind, Recharts, LaTeX, Neovim, tmux) are dropped unless Deepak re-confirms them.
 
-1. Email address
-2. LinkedIn URL
-3. Real resume PDF
-4. CLASP repo URL (if public)
-5. IIT Madras expected completion year
-6. Optional material: a CLASP screenshot, training curve or terminal recording; a photo
+**Still open** (non-blocking: the page omits the item until it's supplied):
+1. CLASP repo URL, if public. Until then, the repo link is left out rather than pointing at the GitHub profile.
+2. Optional material: a CLASP screenshot, training curve or terminal recording, or a photo.
 
 ## 12. Out of scope
 

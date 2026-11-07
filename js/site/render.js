@@ -3,16 +3,21 @@
 import { escapeHtml as esc } from "../terminal/commands.js";
 import { CLASP_DIAGRAM } from "./clasp-diagram.js";
 
+/** Each word sits in its own mask so it can rise into place; spaces stay as text so the heading reads normally. */
+const maskedWords = (text) =>
+  text.split(" ").map((w) => `<span class="w"><span>${esc(w)}</span></span>`).join(" ");
+
 const heading = (id, title, lead) => `
   <div class="container section__head" data-reveal>
-    <h2 class="section__title" id="${id}-title">${esc(title)}</h2>
+    <p class="section__cmd" aria-hidden="true"><span class="prompt-char">❯</span> <span class="section__cmd-text" data-type="cd ${id}">cd ${id}</span></p>
+    <h2 class="section__title" id="${id}-title">${maskedWords(title)}</h2>
     ${lead ? `<p class="section__lead">${esc(lead)}</p>` : ""}
   </div>`;
 
 function aboutHtml({ about }) {
   const paragraphs = about.paragraphs.map((p) => `<p>${esc(p)}</p>`).join("");
   const education = about.education
-    .map((e) => `<li><span class="edu__school">${esc(e.institution)}</span><span class="edu__programme">${esc(e.programme)}</span><span class="edu__dates">${esc(e.dates)}</span></li>`)
+    .map((e) => `<li><span class="edu__rule" aria-hidden="true"></span><span class="edu__school">${esc(e.institution)}</span><span class="edu__programme">${esc(e.programme)}</span><span class="edu__dates">${esc(e.dates)}</span></li>`)
     .join("");
   return `${heading("about", "Computer science at Amrita, data science at IIT Madras.")}
     <div class="container about__grid" data-reveal>
@@ -24,7 +29,7 @@ function aboutHtml({ about }) {
 function skillsHtml({ skills }) {
   const groups = skills
     .map((s) => `<div class="skill skill--${esc(s.colorToken.replace("--", ""))}">
-        <h3 class="skill__group">${esc(s.group)}/</h3>
+        <h3 class="skill__group"><span data-type="${esc(s.group)}/">${esc(s.group)}/</span></h3>
         <ul class="skill__items">${s.items.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>
       </div>`)
     .join("");
@@ -60,7 +65,7 @@ function contactHtml({ profile }) {
   return `${heading("contact", "Hiring for backend or ML? Email is fastest.")}
     <div class="container contact" data-reveal>
       <ul class="contact__links">
-        <li><span class="contact__key">email</span><a href="mailto:${esc(profile.email)}" id="contact-email">${esc(profile.email)}</a><button class="copy-btn" type="button" id="copy-email">copy</button><span class="copy-status" id="copy-status" role="status"></span></li>
+        <li><span class="contact__key">email</span><a href="mailto:${esc(profile.email)}" id="contact-email" aria-label="${esc(profile.email)}" data-type="${esc(profile.email)}">${esc(profile.email)}</a><button class="copy-btn" type="button" id="copy-email">copy</button><span class="copy-status" id="copy-status" role="status"></span></li>
         <li><span class="contact__key">linkedin</span><a href="${esc(profile.linkedin)}" target="_blank" rel="noopener">deepak-senthilkumar</a></li>
         <li><span class="contact__key">github</span><a href="${esc(profile.github)}" target="_blank" rel="noopener">deeepak-17</a></li>
       </ul>

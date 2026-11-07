@@ -4,6 +4,7 @@ export default defineConfig({
   testDir: "tests/e2e",
   testMatch: "*.spec.mjs",
   fullyParallel: true,
+  workers: "50%", // the smoothness test measures frame timing; saturating every core makes it flaky
   reporter: [["list"]],
   use: { baseURL: "http://127.0.0.1:8100" },
   webServer: {

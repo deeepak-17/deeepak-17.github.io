@@ -15,7 +15,7 @@ test("a wheel notch eases the CLASP steps over several frames instead of snappin
   await page.evaluate(() => {
     window.__frames = [];
     const tick = () => {
-      window.__frames.push([...document.querySelectorAll(".clasp__step")].map((e) => Number(getComputedStyle(e).opacity)));
+      window.__frames.push({ t: performance.now(), o: [...document.querySelectorAll(".clasp__step")].map((e) => Number(getComputedStyle(e).opacity)) });
       if (window.__frames.length < 60) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
@@ -23,7 +23,11 @@ test("a wheel notch eases the CLASP steps over several frames instead of snappin
   await page.mouse.wheel(0, 100);
   await page.waitForTimeout(1200);
   const frames = await page.evaluate(() => window.__frames);
-  const deltas = frames.slice(1).map((f, i) => Math.max(...f.map((v, j) => Math.abs(v - frames[i][j]))));
+  // change per 60fps frame of real time, so dropped frames under CPU load don't look like snaps
+  const deltas = frames.slice(1).map((f, i) => {
+    const frameUnits = Math.max(1, (f.t - frames[i].t) / 16.7);
+    return Math.max(...f.o.map((v, j) => Math.abs(v - frames[i].o[j]))) / frameUnits;
+  });
   const changing = deltas.filter((d) => d > 0.001).length;
   expect(Math.max(...deltas)).toBeLessThan(0.05);
   expect(changing).toBeGreaterThan(5);

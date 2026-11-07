@@ -1,34 +1,14 @@
+import { loadGsap } from "./gsap-loader.js";
+
 /* CLASP pinned chapter. GSAP is loaded lazily and only drives desktop, motion-allowed viewports.
    The base CSS layout is the finished state; gsap.matchMedia reverts every change when conditions stop matching. */
 
-const GSAP_SRC = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js";
-const SCROLL_TRIGGER_SRC = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js";
 const MOTION_QUERY = "(min-width: 40rem) and (prefers-reduced-motion: no-preference)";
 const PIN_LENGTH = "+=300%";
 const DIM = 0.5;
 const SCRUB_SMOOTHING_S = 1;
 const SCENE = 3; // timeline units per step; the four steps share the pin evenly
 const STEP_SHIFT_PX = 8;
-
-function loadScript(src) {
-  return new Promise((resolve, reject) => {
-    const existing = document.querySelector(`script[src="${src}"]`);
-    if (existing) { existing.addEventListener("load", resolve, { once: true }); return; }
-    const s = document.createElement("script");
-    s.src = src;
-    s.async = true;
-    s.onload = resolve;
-    s.onerror = () => reject(new Error(`failed to load ${src}`));
-    document.head.appendChild(s);
-  });
-}
-
-async function loadGsap() {
-  if (!window.gsap) await loadScript(GSAP_SRC);
-  if (!window.ScrollTrigger) await loadScript(SCROLL_TRIGGER_SRC);
-  window.gsap.registerPlugin(window.ScrollTrigger);
-  return window.gsap;
-}
 
 function navOffset() {
   const nav = document.getElementById("nav");

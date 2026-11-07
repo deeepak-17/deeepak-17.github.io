@@ -4,6 +4,7 @@ import { validateContent } from "./validate.js";
 import { renderSite } from "./site/render.js";
 import { initReveal } from "./site/reveal.js";
 import { initClaspChapter } from "./site/clasp-chapter.js";
+import { initScrollMotion } from "./site/scroll-motion.js";
 import { createDrawer } from "./terminal/drawer.js";
 import { createCommands } from "./terminal/commands.js";
 import { createSafeStorage } from "./storage.js";
@@ -37,6 +38,10 @@ renderSite(document, CONTENT, validity);
 initReveal(document);
 layoutSettled = initClaspChapter(document.querySelector(".clasp")).finally(() => {
   document.documentElement.dataset.layout = "ready";
+});
+// Section motion is created after the CLASP pin so ScrollTrigger measures positions with the pin spacer in place.
+layoutSettled.then(initScrollMotion).finally(() => {
+  document.documentElement.dataset.motion = "ready";
 });
 
 const drawer = createDrawer({ root: document.body, toggle: document.getElementById("term-toggle"), reducedMotion });

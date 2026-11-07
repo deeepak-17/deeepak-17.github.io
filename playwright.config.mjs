@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: "tests/e2e",
   testMatch: "*.spec.mjs",
   fullyParallel: true,
-  workers: "50%", // the smoothness test measures frame timing; saturating every core makes it flaky
+  workers: "50%",
   reporter: [["list"]],
   use: { baseURL: "http://127.0.0.1:8100" },
   webServer: {
@@ -13,7 +13,10 @@ export default defineConfig({
     reuseExistingServer: false,
   },
   projects: [
-    { name: "chromium", use: { ...devices["Desktop Chrome"] } },
-    { name: "webkit", use: { ...devices["Desktop Safari"] } },
+    { name: "chromium", use: { ...devices["Desktop Chrome"] }, testIgnore: "clasp-smooth.spec.mjs" },
+    { name: "webkit", use: { ...devices["Desktop Safari"] }, testIgnore: "clasp-smooth.spec.mjs" },
+    // Frame-timing test: runs alone, after everything else, so other browsers don't steal its CPU.
+    { name: "perf-chromium", use: { ...devices["Desktop Chrome"] }, testMatch: "clasp-smooth.spec.mjs", dependencies: ["chromium", "webkit"] },
+    { name: "perf-webkit", use: { ...devices["Desktop Safari"] }, testMatch: "clasp-smooth.spec.mjs", dependencies: ["perf-chromium"] },
   ],
 });

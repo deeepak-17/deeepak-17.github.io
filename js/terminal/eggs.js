@@ -1,3 +1,5 @@
+import { DEV_EGGS } from "./eggs-dev.js";
+
 /* Easter eggs: unlisted commands. Each is (ctx, args) => void | Promise<void>. */
 
 const RM_STEPS = ["Deleting /usr…", "Deleting /home…", "Deleting portfolio…"];
@@ -71,6 +73,7 @@ function lines(...text) {
 }
 
 export const EGGS = Object.freeze({
+  ...DEV_EGGS,
   neofetch,
   sudo,
   rm: fakeRm,

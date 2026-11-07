@@ -11,8 +11,8 @@ export function deepFreeze(obj) {
 export const CONTENT = deepFreeze({
   profile: {
     name: "Deepak S",
-    headline: "I build backends and make models fit.",
-    pitch: "Deepak S, final-year CS student, building backend systems and applied ML.",
+    headline: "I make models fit and build backends.",
+    pitch: "Deepak S, final-year CS student, building applied ML and backend systems.",
     email: "deepaksenthilkumar242@gmail.com",
     linkedin: "https://www.linkedin.com/in/deepak-senthilkumar-66674a2a5",
     github: "https://github.com/deeepak-17",
@@ -37,7 +37,7 @@ export const CONTENT = deepFreeze({
     ],
   },
   neofetch: [
-    { key: "Focus", value: "Backend and applied ML" },
+    { key: "Focus", value: "Applied ML and backend" },
     { key: "Stack", value: "Python, PyTorch, FastAPI" },
     { key: "Cloud", value: "AWS EKS, Docker, Kubernetes" },
     { key: "Studying", value: "Amrita CSE and IIT Madras BS DS" },

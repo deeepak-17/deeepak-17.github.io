@@ -1,51 +1,67 @@
-# deepak@portfolio — Terminal + UI Portfolio
+# deepak@portfolio
 
-Terminal-first portfolio in Catppuccin Mocha. Visitors land in an interactive terminal; typing `ui` switches to a full graphical site with a button to drop back into the shell.
+One portfolio, two views:
 
-Zero build step — plain HTML/CSS/JS. Open `index.html` and it works.
+- **The site:** a scrolling page with a pinned, scroll-driven CLASP case study.
+- **The terminal:** a drop-down shell that can drive the page. Press `` ` `` or Ctrl+K, or click `❯_`. Try `help`, `cd projects`, `open clasp`.
+
+First-time visitors see a 1-second boot that hands off to the site. Any key or tap skips it.
+
+Plain HTML, CSS and ES modules, with no build step. GSAP (for the CLASP chapter only) loads from cdnjs.
+
+## Run it locally
+
+ES modules don't load from `file://`, so serve the folder:
+
+```bash
+python3 scripts/serve.py 8000   # then open http://localhost:8000
+```
+
+- `?view=terminal` opens with the terminal showing.
+- `#projects` skips the boot and scrolls to that section.
 
 ## Structure
 
 ```
-portfolio/
-├── index.html      # both views (terminal + UI) in one page
-├── style.css       # Catppuccin Mocha tokens + all styling
-├── script.js       # terminal engine, commands, easter eggs, view switching
-└── assets/
-    └── resume.pdf  # ⚠ PLACEHOLDER — replace with your real resume
+index.html              page shell (hero is static HTML so it works without JS)
+css/tokens.css          Catppuccin Mocha in OKLCH, spacing/type scale
+css/base.css            base rules
+css/site.css            scrolling site
+css/terminal.css        drawer + boot screen
+js/content.js           single source of truth for both views
+js/validate.js          content checks at startup
+js/main.js              entry: renders, wires drawer, boot, ?view=, copy email
+js/boot.js              first-visit boot screen
+js/boot-decision.js     pure: should the boot play?
+js/storage.js           sessionStorage wrapper that never throws
+js/site/render.js       sections from content
+js/site/reveal.js       reveal-once on scroll
+js/site/clasp-chapter.js  GSAP pinned chapter (desktop, motion allowed)
+js/terminal/core.js     parsing, history, completion, suggestions
+js/terminal/commands.js commands (content + page control)
+js/terminal/eggs.js     unlisted commands
+js/terminal/drawer.js   dialog, focus trap, keys
+assets/                 resume, favicon, link-preview image
 ```
 
-## Terminal commands
+## Edit content
 
-`help` `about` `skills` `projects` `resume` `contact` `socials` `ui` `banner` `history` `clear` `echo` `whoami` `pwd` `ls` `cat` `date` `ping`
+Everything visitors read lives in `js/content.js`, and both views render from it.
 
-**Easter eggs (not listed in help):** `neofetch` · `sudo hire-me` · `sudo <anything>` · `rm -rf /` · `vim` (then `:q` to escape) · `coffee` · `matrix` · `cat .secrets`
+- **Add a project:** append an object to `projects` (`id`, `title`, `tagline`, `steps`, `stack`, `repoUrl`). It gets a panel, an `open <id>` command and an `ls` entry. The CLASP diagram is project-specific, so a new project shows its steps without a diagram until one is added in `render.js`.
+- **Add a CLASP repo link:** set `repoUrl` on the CLASP entry.
+- **Replace the resume:** overwrite `assets/Deepak_S_Resume.pdf`.
 
-**Power features:** Tab autocomplete · ↑/↓ history · Ctrl+L clear · Ctrl+C cancel line
+## Tests
 
-## Before you deploy — TODO
-
-1. **Replace `assets/resume.pdf`** with your actual resume.
-2. **Update contact placeholders** in two places:
-   - `index.html` → `#contact` section (`your.email@example.com`, LinkedIn `#`)
-   - `script.js` → `CONTACT` array (same placeholders)
-3. Point each project card's `↗` link (`index.html`) at the actual repo instead of your profile, once repos are public.
-
-## Deploy
-
-**GitHub Pages (recommended, free):**
 ```bash
-cd portfolio
-git init && git add . && git commit -m "terminal portfolio"
-# create repo named deeepak-17.github.io on GitHub, then:
-git remote add origin git@github.com:deeepak-17/deeepak-17.github.io.git
-git push -u origin main
+npm install
+npx playwright install chromium webkit
+npm test              # unit tests (node:test)
+npm run test:cov      # unit tests with coverage
+npm run e2e           # Playwright, Chromium + WebKit
 ```
-Live at `https://deeepak-17.github.io` within a minute. (Settings → Pages → deploy from `main` if it doesn't auto-enable.)
 
-**Vercel:** `npx vercel` from the folder, or import the repo at vercel.com. Either works — there's nothing to build.
+## Deploy (GitHub Pages)
 
-## Customizing
-
-- Colors: everything derives from the Catppuccin variables at the top of `style.css`.
-- Add a terminal command: add an entry to the `commands` object in `script.js`; add its name to `VISIBLE_COMMANDS` if it should appear in `help`/autocomplete (leave it out to make it an easter egg).
+Push this folder to a repo named `deeepak-17.github.io`. Under Settings → Pages, deploy from the `main` branch root. There's nothing to build.

@@ -29,8 +29,8 @@ test("content never mentions CyberShield or hackathons", () => {
 });
 
 test("a project with a null repoUrl is valid", () => {
-  assert.equal(CONTENT.projects[0].repoUrl, null);
-  assert.equal(validateContent(CONTENT).valid.projects, true);
+  const noRepo = { ...CONTENT, projects: [{ ...CONTENT.projects[0], repoUrl: null }] };
+  assert.equal(validateContent(noRepo).valid.projects, true);
 });
 
 test("a project missing its steps is invalid", () => {

@@ -29,6 +29,7 @@ test("gigguard sits below clasp with its own heading and a repo link", async ({ 
   await expect(page.locator("#clasp-title")).toHaveText(/^CLASP personalises a code LLM/);
   await expect(page.locator("#gigguard .section__cmd-text")).toHaveText("open gigguard");
   await expect(page.locator("#gigguard a[href='https://github.com/deeepak-17/GigGuard']")).toHaveCount(1);
+  await expect(page.locator("#clasp a[href='https://github.com/deeepak-17/CLASP']")).toHaveText("source on GitHub");
   await expect(page.locator("#gigguard svg title")).toHaveText(/GigGuard/);
   await expect(page.locator("#projects")).not.toContainText(/hackathon|devtrails|guidewire/i);
 });

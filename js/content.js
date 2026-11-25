@@ -99,7 +99,7 @@ export const CONTENT = deepFreeze({
         },
       ],
       stack: ["PyTorch", "PEFT", "Flower", "Opacus", "FastAPI", "Docker"],
-      repoUrl: null,
+      repoUrl: "https://github.com/deeepak-17/CLASP",
     },
     {
       id: "gigguard",

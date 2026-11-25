@@ -51,7 +51,7 @@ assets/                 resume, favicon, link-preview image
 Everything visitors read lives in `js/content.js`, and both views render from it.
 
 - **Add a project:** append an object to `projects` (`id`, `title`, `headline`, `tagline`, `steps`, `stack`, `repoUrl`). It gets its own heading and pinned chapter, an `open <id>` command and an `ls` entry. It shows its steps without a diagram until you add `js/site/<id>-diagram.js` and `<id>-scenes.js`, then register them in `DIAGRAMS` (`render.js`) and `SCENES_BY_ID` (`project-chapter.js`).
-- **Add a CLASP repo link:** set `repoUrl` on the CLASP entry.
+- **Repo links:** a project with `repoUrl` ends with "source on GitHub"; with `repoUrl: null` it ends with an "Ask me about …" email link instead.
 - **Replace the resume:** overwrite `assets/Deepak_S_Resume.pdf`.
 
 ## Tests

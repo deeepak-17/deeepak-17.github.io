@@ -36,3 +36,7 @@ test("gigguard copy names no event and invents no figures beyond the README", ()
   assert.doesNotMatch(text, /hackathon|devtrails|guidewire|cybershield/i);
   assert.doesNotMatch(text, /\d+\s?%\s+of (their|monthly)/i); // README's 20-30% earnings claim stays out
 });
+
+test("clasp links to its public repo", () => {
+  assert.equal(CONTENT.projects[0].repoUrl, "https://github.com/deeepak-17/CLASP");
+});

@@ -1,4 +1,4 @@
-/* Scroll-linked motion for every section outside the CLASP chapter.
+/* Scroll-linked motion for every section outside the pinned project chapters (project headings included).
    The HTML is the finished state. gsap.matchMedia sets start states only while its query matches,
    and reverts them (plus typed text) when it stops matching or under reduced motion. */
 

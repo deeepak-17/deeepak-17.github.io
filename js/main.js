@@ -3,7 +3,7 @@ import { CONTENT } from "./content.js";
 import { validateContent } from "./validate.js";
 import { renderSite } from "./site/render.js";
 import { initReveal } from "./site/reveal.js";
-import { initClaspChapter } from "./site/clasp-chapter.js";
+import { initProjectChapters } from "./site/project-chapter.js";
 import { initScrollMotion } from "./site/scroll-motion.js";
 import { createDrawer } from "./terminal/drawer.js";
 import { createCommands } from "./terminal/commands.js";
@@ -16,7 +16,7 @@ const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)"
 const LAYOUT_WAIT_MS = 1200;
 let layoutSettled = Promise.resolve();
 
-/** Waits (briefly) for the CLASP pin to exist, so a smooth scroll is not cut short by its setup. */
+/** Waits (briefly) for the project pins to exist, so a smooth scroll is not cut short by its setup. */
 async function scrollToId(id) {
   await Promise.race([layoutSettled, new Promise((r) => setTimeout(r, LAYOUT_WAIT_MS))]);
   const target = document.getElementById(id === "top" ? "hero" : id);
@@ -36,10 +36,10 @@ const validity = validateContent(CONTENT);
 if (!validity.ok) console.error("content invalid:", validity.errors.join(", "));
 renderSite(document, CONTENT, validity);
 initReveal(document);
-layoutSettled = initClaspChapter(document.querySelector(".clasp")).finally(() => {
+layoutSettled = initProjectChapters(document.querySelectorAll(".chapter")).finally(() => {
   document.documentElement.dataset.layout = "ready";
 });
-// Section motion is created after the CLASP pin so ScrollTrigger measures positions with the pin spacer in place.
+// Section motion is created after the project pins so ScrollTrigger measures positions with the pin spacer in place.
 layoutSettled.then(initScrollMotion).finally(() => {
   document.documentElement.dataset.motion = "ready";
 });

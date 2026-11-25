@@ -33,12 +33,12 @@ test("reduced motion shows every CLASP step without pinning", async ({ browser }
   const page = await context.newPage();
   await skipBoot(page);
   await page.goto("/#projects");
-  const steps = page.locator(".clasp__step h3");
+  const steps = page.locator("#clasp .chapter__step h4");
   await expect(steps).toHaveCount(4);
   for (const step of await steps.all()) {
     await step.scrollIntoViewIfNeeded();
     await expect(step).toBeVisible();
-    expect(await step.evaluate((el) => getComputedStyle(el.closest(".clasp__step")).opacity)).toBe("1");
+    expect(await step.evaluate((el) => getComputedStyle(el.closest(".chapter__step")).opacity)).toBe("1");
   }
   expect(await page.locator(".pin-spacer").count()).toBe(0);
   await context.close();
@@ -62,7 +62,7 @@ test("resizing below 40rem mid-chapter unpins and shows all steps", async ({ pag
   await page.setViewportSize({ width: 375, height: 800 });
   await page.waitForTimeout(600);
   expect(await page.locator(".pin-spacer").count()).toBe(0);
-  for (const step of await page.locator(".clasp__step").all()) {
+  for (const step of await page.locator("#clasp .chapter__step").all()) {
     expect(Number(await step.evaluate((el) => getComputedStyle(el).opacity))).toBe(1);
   }
 });
@@ -71,5 +71,5 @@ test("clasp chapter pins and scrubs on desktop", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto("/");
   await page.locator("#clasp").scrollIntoViewIfNeeded();
-  await expect(page.locator(".pin-spacer")).toHaveCount(1, { timeout: 5000 });
+  await expect(page.locator("#clasp .pin-spacer")).toHaveCount(1, { timeout: 5000 });
 });

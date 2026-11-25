@@ -1,7 +1,7 @@
 /* Checks content shape at boot. Never throws; reports dotted paths of missing fields. */
 
 const PROFILE_FIELDS = ["name", "headline", "pitch", "email", "linkedin", "github", "resumeUrl"];
-const PROJECT_FIELDS = ["id", "title", "tagline"];
+const PROJECT_FIELDS = ["id", "title", "headline", "tagline"];
 
 const isText = (v) => typeof v === "string" && v.trim().length > 0;
 const isNonEmptyArray = (v) => Array.isArray(v) && v.length > 0;

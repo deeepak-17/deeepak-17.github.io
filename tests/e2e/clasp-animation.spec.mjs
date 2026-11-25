@@ -51,7 +51,7 @@ test.describe("CLASP diagram animates on desktop", () => {
   });
 
   test("update dots travel during the training scene", async ({ page }) => {
-    await expect(page.locator(".dg-dot")).toHaveCount(6);
+    await expect(page.locator("#clasp .dg-dot")).toHaveCount(6);
     await scrollIntoChapter(page, 0.37); // scene 2 travel window: timeline 3.8 to 5.0 of 12
     const moved = await matrixOf(page, ".dg-dot >> nth=0");
     expect(moved).not.toBe("none");
@@ -59,7 +59,7 @@ test.describe("CLASP diagram animates on desktop", () => {
 
   test("the current step leads and the others dim", async ({ page }) => {
     await scrollIntoChapter(page, 0.6);
-    const ops = await page.locator(".clasp__step").evaluateAll((els) => els.map((e) => Number(getComputedStyle(e).opacity)));
+    const ops = await page.locator("#clasp .chapter__step").evaluateAll((els) => els.map((e) => Number(getComputedStyle(e).opacity)));
     expect(Math.max(...ops)).toBeGreaterThan(0.95);
     expect(ops.filter((o) => o > 0.95)).toHaveLength(1);
   });

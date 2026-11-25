@@ -1,4 +1,5 @@
-/* Single source of truth for both views. Facts come from Resume-Master.pdf only. */
+/* Single source of truth for both views. Facts come from Resume-Master.pdf only,
+   except GigGuard, whose facts come from its public README (github.com/deeepak-17/GigGuard). */
 
 export function deepFreeze(obj) {
   if (obj && typeof obj === "object" && !Object.isFrozen(obj)) {
@@ -77,6 +78,7 @@ export const CONTENT = deepFreeze({
     {
       id: "clasp",
       title: "CLASP",
+      headline: "CLASP personalises a code LLM without collecting the code.",
       tagline: "Federated, cluster-personalised code assistant",
       steps: [
         {
@@ -98,6 +100,32 @@ export const CONTENT = deepFreeze({
       ],
       stack: ["PyTorch", "PEFT", "Flower", "Opacus", "FastAPI", "Docker"],
       repoUrl: null,
+    },
+    {
+      id: "gigguard",
+      title: "GigGuard",
+      headline: "GigGuard insures a delivery worker's week against rain, heat and curfews.",
+      tagline: "Parametric income insurance for delivery workers",
+      steps: [
+        {
+          title: "The problem",
+          body: "Rain, heat, bad air, floods, traffic or a curfew can stop a delivery worker's week, and no insurance product is built around weekly earnings.",
+        },
+        {
+          title: "Payouts that scale",
+          body: "Six live triggers feed a fuzzy-logic engine, so a payout rises from 0% at the entry threshold to 100% at the ceiling instead of flipping at one number. The curfew trigger blends GDELT unrest events with a zero-shot NLP model reading news headlines.",
+        },
+        {
+          title: "Priced weekly, checked for fraud",
+          body: "An XGBoost model prices each week's premium from 25 features, including earnings, weather and past claims. Isolation Forest anomaly scores and GPS checks hold suspicious claims for review instead of paying them out.",
+        },
+        {
+          title: "Built with",
+          body: "The stack, end to end.",
+        },
+      ],
+      stack: ["FastAPI", "XGBoost", "scikit-learn", "Hugging Face", "Next.js", "React Native", "Supabase"],
+      repoUrl: "https://github.com/deeepak-17/GigGuard",
     },
   ],
 });

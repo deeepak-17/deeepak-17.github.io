@@ -19,10 +19,10 @@ test.describe("desktop", () => {
   });
 
   test("unreached CLASP steps stay readable when the pin starts", async ({ page }) => {
-    const top = await page.evaluate(() => document.querySelector(".clasp").getBoundingClientRect().top + scrollY);
+    const top = await page.evaluate(() => document.querySelector("#clasp .chapter__body").getBoundingClientRect().top + scrollY);
     await page.evaluate((y) => scrollTo(0, y - 64 + 5), top);
     await page.waitForTimeout(300);
-    const opacities = await page.locator(".clasp__step").evaluateAll((els) => els.map((e) => Number(getComputedStyle(e).opacity)));
+    const opacities = await page.locator("#clasp .chapter__step").evaluateAll((els) => els.map((e) => Number(getComputedStyle(e).opacity)));
     for (const o of opacities) expect(o).toBeGreaterThanOrEqual(0.45);
   });
 
@@ -67,7 +67,7 @@ test.describe("phone", () => {
   });
 
   test("diagram labels stay legible (svg at least 560px wide)", async ({ page }) => {
-    const w = await page.locator(".clasp__figure svg").evaluate((el) => el.getBoundingClientRect().width);
+    const w = await page.locator("#clasp .chapter__figure svg").evaluate((el) => el.getBoundingClientRect().width);
     expect(w).toBeGreaterThanOrEqual(560);
     const { sw, cw } = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth }));
     expect(sw).toBeLessThanOrEqual(cw);

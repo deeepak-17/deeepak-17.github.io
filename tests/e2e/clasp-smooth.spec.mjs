@@ -15,7 +15,7 @@ test("a wheel notch eases the CLASP steps over several frames instead of snappin
   await page.evaluate(() => {
     window.__frames = [];
     const tick = () => {
-      window.__frames.push({ t: performance.now(), o: [...document.querySelectorAll(".clasp__step")].map((e) => Number(getComputedStyle(e).opacity)) });
+      window.__frames.push({ t: performance.now(), o: [...document.querySelectorAll("#clasp .chapter__step")].map((e) => Number(getComputedStyle(e).opacity)) });
       if (window.__frames.length < 60) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);

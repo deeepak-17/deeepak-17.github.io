@@ -1,4 +1,4 @@
-/* CLASP architecture diagram (inline SVG). The markup is the finished state; clasp-chapter.js animates into it. */
+/* CLASP architecture diagram (inline SVG). The markup is the finished state; clasp-scenes.js animates into it. */
 
 const REPO_COUNT = 6;
 const REPO_STEP = 77;

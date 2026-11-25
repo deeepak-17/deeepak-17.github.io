@@ -2,6 +2,7 @@
 
 import { escapeHtml as esc } from "../terminal/commands.js";
 import { CLASP_DIAGRAM } from "./clasp-diagram.js";
+import { GIGGUARD_DIAGRAM } from "./gigguard-diagram.js";
 
 /** Each word sits in its own mask so it can rise into place; spaces stay as text so the heading reads normally. */
 const maskedWords = (text) =>
@@ -37,27 +38,49 @@ function skillsHtml({ skills }) {
     <div class="container skills__grid" data-reveal>${groups}</div>`;
 }
 
-function projectHtml(project, email) {
-  const steps = project.steps
-    .map((s, i) => {
-      const isLast = i === project.steps.length - 1;
-      const stack = isLast ? `<ul class="clasp__stack" aria-label="Stack">${project.stack.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>` : "";
-      const repo = !isLast ? "" : project.repoUrl
-        ? `<a class="btn btn--ghost" href="${esc(project.repoUrl)}" target="_blank" rel="noopener">source on GitHub</a>`
-        : `<a class="clasp__ask" href="mailto:${esc(email)}?subject=${encodeURIComponent(project.title)}">Ask me about ${esc(project.title)}</a>`;
-      return `<li class="clasp__step" data-step="${i}"><h3>${esc(s.title)}</h3><p>${esc(s.body)}</p>${stack}${repo}</li>`;
-    })
-    .join("");
-  return `<div class="clasp" id="${esc(project.id)}">
-      <div class="container clasp__pin">
-        <ol class="clasp__steps">${steps}</ol>
-        <figure class="clasp__figure">${CLASP_DIAGRAM}<figcaption>${esc(project.title)}: ${esc(project.tagline)}</figcaption></figure>
-      </div>
+/** Projects with a diagram; any other project shows its steps without a figure. */
+const DIAGRAMS = Object.freeze({ clasp: CLASP_DIAGRAM, gigguard: GIGGUARD_DIAGRAM });
+
+function chapterHead(project) {
+  const id = esc(project.id);
+  return `<div class="container section__head chapter__head" data-reveal>
+      <p class="section__cmd" aria-hidden="true"><span class="prompt-char">❯</span> <span class="section__cmd-text" data-type="open ${id}">open ${id}</span></p>
+      <h3 class="section__title" id="${id}-title">${maskedWords(project.headline)}</h3>
     </div>`;
 }
 
+function stepAction(project, email) {
+  return project.repoUrl
+    ? `<a class="btn btn--ghost" href="${esc(project.repoUrl)}" target="_blank" rel="noopener">source on GitHub</a>`
+    : `<a class="chapter__ask" href="mailto:${esc(email)}?subject=${encodeURIComponent(project.title)}">Ask me about ${esc(project.title)}</a>`;
+}
+
+function projectHtml(project, email) {
+  const lastIndex = project.steps.length - 1;
+  const steps = project.steps
+    .map((s, i) => {
+      const extras = i !== lastIndex ? "" :
+        `<ul class="chapter__stack" aria-label="Stack">${project.stack.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>${stepAction(project, email)}`;
+      return `<li class="chapter__step" data-step="${i}"><h4>${esc(s.title)}</h4><p>${esc(s.body)}</p>${extras}</li>`;
+    })
+    .join("");
+  const diagram = DIAGRAMS[project.id];
+  const figure = diagram
+    ? `<figure class="chapter__figure">${diagram}<figcaption>${esc(project.title)}: ${esc(project.tagline)}</figcaption></figure>`
+    : "";
+  return `<article class="chapter" id="${esc(project.id)}" aria-labelledby="${esc(project.id)}-title">
+      ${chapterHead(project)}
+      <div class="chapter__body">
+        <div class="container chapter__pin${diagram ? "" : " chapter__pin--text"}">
+          <ol class="chapter__steps">${steps}</ol>
+          ${figure}
+        </div>
+      </div>
+    </article>`;
+}
+
 function projectsHtml({ projects, profile }) {
-  return `${heading("projects", "CLASP personalises a code LLM without collecting the code.")}
+  return `${heading("projects", "Things I've built.")}
     ${projects.map((p) => projectHtml(p, profile.email)).join("")}`;
 }
 

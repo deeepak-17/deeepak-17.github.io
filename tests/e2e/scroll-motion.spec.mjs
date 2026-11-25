@@ -32,7 +32,10 @@ test.describe("desktop scroll motion", () => {
 
   test("each section has a cd line that types in as it scrolls into view", async ({ page }) => {
     for (const id of ["about", "skills", "projects", "contact"]) {
-      await expect(page.locator(`#${id} .section__cmd-text`)).toHaveAttribute("data-type", `cd ${id}`);
+      await expect(page.locator(`#${id} > .section__head .section__cmd-text`)).toHaveAttribute("data-type", `cd ${id}`);
+    }
+    for (const id of ["clasp", "gigguard"]) {
+      await expect(page.locator(`#${id} > .section__head .section__cmd-text`)).toHaveAttribute("data-type", `open ${id}`);
     }
     expect((await page.locator("#about .section__cmd-text").textContent()).length).toBeLessThan("cd about".length);
     await scrollToEl(page, "#about", 0.1);
@@ -45,6 +48,17 @@ test.describe("desktop scroll motion", () => {
     await scrollToEl(page, "#skills", 0.1);
     await settle(page);
     expect(await isMoved(page, "#skills .section__title .w > span")).toBe(false);
+  });
+
+  test("each project heading types its open line and its words rise, like a section heading", async ({ page }) => {
+    for (const id of ["clasp", "gigguard"]) {
+      const head = `#${id} > .section__head`;
+      expect(await isMoved(page, `${head} .section__title .w > span`)).toBe(true);
+      await scrollToEl(page, head, 0.1);
+      await settle(page);
+      expect(await isMoved(page, `${head} .section__title .w > span`)).toBe(false);
+      await expect(page.locator(`${head} .section__cmd-text`)).toHaveText(`open ${id}`);
+    }
   });
 
   test("hero copy drifts and fades as you leave it", async ({ page }) => {
